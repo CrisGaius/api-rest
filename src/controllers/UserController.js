@@ -3,7 +3,7 @@ class UserController {
   // Index
   async index(request, response) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ["id", "name", "email"] });
       return response.json({
         users
       });
@@ -16,9 +16,8 @@ class UserController {
   async storeUser(request, response) {
     try {
       const newUser = await User.create(request.body);
-      return response.json({
-        newUser
-      });
+      const { id, name, email } = newUser;
+      return response.json({ id, name, email });
     } catch (e) {
       return response.status(400).json(
         {
@@ -32,7 +31,8 @@ class UserController {
   async show(request, response) {
     try {
       const user = await User.findByPk(request.params.id);
-      return response.json(user);
+      const { id, name, email } = user;
+      return response.json({ id, name, email });
     } catch (e) {
       return response.json("Não foi possível encontrar o usuário.");
     }
@@ -41,14 +41,13 @@ class UserController {
   //update
   async update(request, response) {
     try {
-      if (!request.params.id) return response.status(400).json({ errors: ["ID não foi enviado."] });
-
-      const user = await User.findByPk(request.params.id);
+      const user = await User.findByPk(request.userId);
 
       if (!user) return response.status(400).json({ errors: ["Usuário não existe."] });
 
       const newData = await user.update(request.body);
-      return response.json(newData);
+      const { id, name, email } = newData;
+      return response.json({ id, name, email });
     } catch (e) {
       return response.status(400).json({
         errors: e.errors.map((err) => err.message)
@@ -59,14 +58,12 @@ class UserController {
   //delete
   async delete(request, response) {
     try {
-      if (!request.params.id) return response.status(400).json({ errors: ["ID não foi enviado."] });
-
-      const user = await User.findByPk(request.params.id);
+      const user = await User.findByPk(request.userId);
 
       if (!user) return response.status(400).json({ errors: ["Usuário não existe."] });
 
       await user.destroy();
-      return response.json(`${request.params.id} excluído com sucesso.`);
+      return response.json(`${request.userId} excluído com sucesso.`);
     } catch (e) {
       return response.status(400).json({
         errors: e.errors.map((err) => err.message)
