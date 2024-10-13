@@ -25,7 +25,7 @@ class Application {
     this.application.use("/", homeRoutes);
     this.application.use("/users", userRoutes);
     this.application.use("/tokens", tokenRoutes);
-    this.application.use("/alunos", studentRoutes);
+    this.application.use("/students", studentRoutes);
   }
 }
 
