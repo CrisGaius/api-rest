@@ -2,7 +2,7 @@ import { Router } from "express";
 import userController from "../controllers/UserController";
 import loginRequired from "../middlewares/loginRequired";
 
-const router = new Router;
+const router = new Router();
 
 // Não existem em um sistema real.
 //router.get("/", loginRequired, userController.index); // Lista usuários

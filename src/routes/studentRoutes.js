@@ -2,7 +2,7 @@ import { Router } from "express";
 import studentController from "../controllers/StudentController";
 import loginRequired from "../middlewares/loginRequired";
 
-const router = new Router;
+const router = new Router();
 
 router.get("/", studentController.index);
 router.get("/:id", studentController.show);
