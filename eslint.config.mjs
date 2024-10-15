@@ -12,6 +12,7 @@ export default [
       "indent": ["error", 2], // Exigir indentação de 2 espaços
       "class-methods-use-this": "off",
       "no-unused-vars": "off",
+      "camelcase": "off",
     }
   }
 ];
