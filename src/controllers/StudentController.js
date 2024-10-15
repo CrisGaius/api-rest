@@ -1,21 +1,38 @@
 import Student from "../models/Student";
+import StudentPhoto from "../models/StudentPhoto";
 class StudentController {
   async index(request, response) {
-    const students = await Student.findAll();
-    response.json(students);
+    try {
+      const students = await Student.findAll({
+        attributes: ["id", "name", "last_name", "email", "age", "weight", "height"],
+        order: [["id", "DESC"], [StudentPhoto, "id", "DESC"]],
+        include: {
+          model: StudentPhoto,
+          attributes: ["id", "filename"],
+        }
+      });
+      return response.json(students);
+    } catch (e) {
+      return response.status(400).json({ errors: ["Algo deu errado ao selecionar os alunos."] });
+    }
   }
 
   async show(request, response) {
     if (!request.params.id) return response.status(400).json({ errors: ["Missing ID."] });
 
     try {
-      const student = await Student.findByPk(request.params.id);
+      const student = await Student.findByPk(request.params.id, {
+        attributes: ["id", "name", "last_name", "email", "age", "weight", "height"],
+        order: [["id", "DESC"], [StudentPhoto, "id", "DESC"]],
+        include: {
+          model: StudentPhoto,
+          attributes: ["id", "filename"],
+        }
+      });
 
       if (!student) return response.status(400).json({ errors: "Student not found." });
 
-      const { id, name, last_name, email } = student;
-
-      return response.json({ id, name, last_name, email });
+      return response.json(student);
     } catch (e) {
       return response.status(400).json({ errors: e.errors.map((err) => err.message) });
     }
