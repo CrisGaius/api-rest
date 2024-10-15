@@ -6,7 +6,7 @@ import StudentPhoto from "../models/StudentPhoto";
 
 const upload = multer(multerConfig).single("photo");
 
-class PhotoController {
+class StudentPhotoController {
   store(request, response) {
     return upload(request, response, async (error) => {
       if (error) return response.status(400).json({ errors: [error.code] });
@@ -23,4 +23,4 @@ class PhotoController {
   }
 }
 
-export default new PhotoController();
+export default new StudentPhotoController();
