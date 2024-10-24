@@ -18,7 +18,7 @@ class TokenController {
     const token = _jsonwebtoken2.default.sign({ id, email }, process.env.TOKEN_SECRET, {
       expiresIn: process.env.TOKEN_EXPIRATION
     });
-    return response.json({ token });
+    return response.json({ token, user: { name: user.name, id, email } });
   }
 }
 
