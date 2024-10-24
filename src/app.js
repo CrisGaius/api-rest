@@ -5,7 +5,7 @@ import "./database/connection";
 
 import express from "express";
 import cors from "cors";
-import helmet from "helmet";
+// import helmet from "helmet";
 import { resolve } from "path";
 
 import homeRoutes from "./routes/homeRoutes";
@@ -38,7 +38,7 @@ class Application {
 
   middlewares() {
     this.application.use(cors(corsOptions));
-    this.application.use(helmet());
+    // this.application.use(helmet());
     this.application.use(express.urlencoded({ extended: true }));
     this.application.use(express.json());
     this.application.use("/images", express.static(resolve(__dirname, "..", "uploads", "images")));
