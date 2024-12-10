@@ -16,6 +16,7 @@ import studentPhotoRoutes from "./routes/studentPhotoRoutes";
 
 const whiteList = [
   "http://34.95.206.56:81",
+  "http://34.95.206.56:82",
   "http://localhost:3000",
 ];
 
